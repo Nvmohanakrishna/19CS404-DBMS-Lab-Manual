@@ -49,362 +49,346 @@ SELECT column1, column2 FROM table_name WHERE condition;
 ```
 **Question 1**
 ```
-Write a SQL statement to change the first_name column of employees table with 'John' for those employees whose department_id is 80 and gets a commission_pct below 0.35.
+How many patients have expired insurance coverage for each insurance company?
 
-Employees table
+Sample table:Insurance Table
 
----------------
-employee_id
-first_name
-last_name
-email
-phone_number
-hire_date
-job_id
-salary
-commission_pct
-manager_id
-department_id
+
+
 For example:
 
-Test	Result
-SELECT * FROM EMPLOYEES WHERE DEPARTMENT_ID=80 AND COMMISSION_PCT=.25;
-EMPLOYEE_ID  FIRST_NAME  LAST_NAME   EMAIL       PHONE_NUMBER        HIRE_DATE   JOB_ID      SALARY      COMMISSION_PCT  MANAGER_ID  DEPARTMENT_ID
------------  ----------  ----------  ----------  ------------------  ----------  ----------  ----------  --------------  ----------  -------------
-151          John        Bernstein   DBERNSTE    011.44.1344.345268  8/7/87      SA_REP      9500        0.25            145         80
-152          John        Hall        PHALL       011.44.1344.478968  8/8/87      SA_REP      9000        0.25            145         80
-161          John        Sewall      SSEWALL     011.44.1345.529268  8/17/87     SA_REP      7000        0.25            146         80
-162          John        Vishney     CVISHNEY    011.44.1346.129268  8/18/87     SA_REP      10500       0.25            147         80
-168          John        Ozer        LOZER       011.44.1343.929268  8/24/87     SA_REP      11500       0.25            148         80
-175          John        Hutton      AHUTTON     011.44.1644.429266  8/31/87     SA_REP      8800        0.25            149         80
+Result
+InsuranceCompany  TotalExpiredPatients
+----------------  --------------------
+ABC Insurance     1
+DEF Insurance     1
+GHI Insurance     1
+JKL Insurance     1
+MNO Insurance     1
+PQR Insurance     1
+STU Insurance     1
+VWX Insurance     1
+XYZ Insurance     1
+YZA Insurance     1
 
 ```
 
-```sql
-UPDATE Employees
-SET FIRST_NAME = 'John'
-WHERE DEPARTMENT_ID = 80 
-  AND COMMISSION_PCT < 0.35
+```
+SELECT InsuranceCompany,COUNT(PatientID) AS TotalExpiredPatients
+FROM Insurance
+GROUP BY InsuranceCompany;
 ```
 
 **Output:**
 
-<img width="1051" height="163" alt="image" src="https://github.com/user-attachments/assets/cc421a3f-3e8e-4029-8554-3ec43e5bb724" />
+<img width="1236" height="875" alt="image" src="https://github.com/user-attachments/assets/973f5f9b-7be2-422a-b9f4-f9992b1b65a2" />
 
 
 **Question 2**
 ```
-Write a SQL statement to Update the product_name to 'Premium Bread' whose product ID is 5 in the products table.
+What is the most common diagnosis among patients?
 
-Products table
+Sample table:MedicalRecords Table
 
----------------
-product_id
-product_name
-category
-cost_price
-sell_price
-reorder_lvl
-quantity
-supplier_id
+
+
+For example:
+
+Result
+Diagnosis              DiagnosisCount
+---------------------  --------------
+Childhood vaccination  3
+
 ```
 
-```sql
-UPDATE Products 
-set product_name = 'Premium Bread'
-where product_id = 5;
+```
+SELECT
+    Diagnosis,
+    COUNT(*) AS DiagnosisCount
+FROM 
+    MedicalRecords
+GROUP BY 
+    Diagnosis
+ORDER BY
+    DiagnosisCount DESC
+LIMIT 1;
 ```
 
 **Output:**
 
-<img width="1565" height="314" alt="image" src="https://github.com/user-attachments/assets/ea10a42c-6534-4a59-907e-270d7e087c0d" />
-
+<img width="1237" height="430" alt="image" src="https://github.com/user-attachments/assets/52d637ce-d770-4111-9f23-f202593be6f4" />
 
 **Question 3**
 ```
-Write a SQL statement to change the EMAIL and COMMISSION_PCT column of the following EMPLOYEES table with 'not available' and 0.55 for those employees whose DEPARTMENT_ID is 110.
+How many prescriptions were written in each frequency category (e.g., once daily, twice daily)?
 
-Employees table
+Sample tablePrescriptions Table
 
----------------
-employee_id
-first_name
-last_name
-email
-phone_number
-hire_date
-job_id
-salary
-commission_pct
-manager_id
-department_id
+
+
 For example:
 
-Test	Result
-SELECT EMPLOYEE_ID,FIRST_NAME,EMAIL,COMMISSION_PCT FROM EMPLOYEES 
-WHERE DEPARTMENT_ID=110 LIMIT 1;
-EMPLOYEE_ID  FIRST_NAME  EMAIL          COMMISSION_PCT
------------  ----------  -------------  --------------
-205          Shelley     not available  0.55
+Result
+Frequency      TotalPrescriptions
+-------------  ------------------
+Every 3 weeks  1
+Every 6 hours  1
+Once           1
+Once daily     4
+Once daily at  1
+Pending        1
+Twice daily    1
+
 
 ```
 
-```sql
-update Employees
-set email = 'not available',COMMISSION_PCT = 0.55 where DEPARTMENT_ID = 110;
+```
+select frequency, count(prescriptionid) as TotalPrescriptions from prescriptions group by frequency;
 ```
 
 **Output:**
 
-<img width="1064" height="209" alt="image" src="https://github.com/user-attachments/assets/a1be3248-0112-4dd0-8a3d-5e4c3dd61cc3" />
+<img width="1243" height="655" alt="image" src="https://github.com/user-attachments/assets/ed1be5f9-71e8-4851-97b3-ffc684defee2" />
+
 
 
 **Question 4**
 
 ```
-Write a SQL statement to Increase the selling price per unit by 5% for product ID 15 who's sale is on '2023-01-31'.
+Write a SQL query to find the minimum purchase amount.
 
-sales(sale_id,sale_date,product_id,quantity,sell_price,total_sell_price)
+Sample table: orders
+
+ord_no      purch_amt   ord_date    customer_id  salesman_id
+
+----------  ----------  ----------  -----------  -----------
+
+70001       150.5       2012-10-05  3005         5002
+
+70009       270.65      2012-09-10  3001         5005
+
+70002       65.26       2012-10-05  3002         5001
+
+ 
 
 For example:
 
-Test	Result
-select changes();
-changes()
+Result
+MINIMUM
 ----------
-3
+65.26
+
 
 ```
-```sql
-update sales set sell_price=sell_price*1.05 where product_id=15 and sale_date='2023-01-31';
+```
+select min(purch_amt) as MINIMUM
+from orders;
 ```
 
 **Output:**
 
-<img width="1019" height="250" alt="image" src="https://github.com/user-attachments/assets/d47b9758-045c-408f-9cac-b41e5b7fdff4" />
+<img width="1235" height="431" alt="image" src="https://github.com/user-attachments/assets/5c7acd34-c905-4389-b03c-b565b00c1033" />
+
 
 
 **Question 5**
 ```
-Write a SQL statement to Double the salary for employees in department 20 who have a job_id ending with 'MAN'
+Write a SQL query to find Who has the highest income among employee living in California?
 
-Employees table
+Table: employee
 
----------------
-employee_id
-first_name
-last_name
-email
-phone_number
-hire_date
-job_id
-salary
-commission_pct
-manager_id
-department_id
+name        type
+----------  ----------
+id          INTEGER
+name        TEXT
+age         INTEGER
+city        TEXT
+income      INTEGER
 For example:
 
-Test	Result
-SELECT EMPLOYEE_ID, FIRST_NAME, EMAIL, SALARY, JOB_ID FROM EMPLOYEES 
-WHERE department_id = 20;
-EMPLOYEE_ID  FIRST_NAME  EMAIL       SALARY      JOB_ID
------------  ----------  ----------  ----------  ----------
-201          Michael     MHARTSTE    26000       MK_MAN
-202          Pat         PFAY        6000        MK_REP
+Result
+name        max(income)
+----------  -----------
+Adam        5000000
+
 
 ```
 
-```sql
-update Employees set salary = salary * 2
-where department_id = 20 and job_id like '%MAN';
+```
+SELECT name, max(income)
+FROM employee
+WHERE city = 'California';
 ```
 
 **Output:**
 
-<img width="1303" height="240" alt="image" src="https://github.com/user-attachments/assets/e0a181a9-016c-4476-866a-ddca34246723" />
+<img width="1237" height="437" alt="image" src="https://github.com/user-attachments/assets/e1a5af47-5bf5-43a6-954d-18896d22015c" />
 
 
 **Question 6**
 ```
+Write a SQL query to find the average length of email addresses (in characters):
 
-Write a SQL query to Delete customers from 'customer' table where 'GRADE' is less than 2.
+Table: customer
 
- 
-Sample table: Customer
-
-+-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+  
-|CUST_CODE  | CUST_NAME   | CUST_CITY   | WORKING_AREA | CUST_COUNTRY | GRADE | OPENING_AMT | RECEIVE_AMT | PAYMENT_AMT |OUTSTANDING_AMT| PHONE_NO     | AGENT_CODE |
-+-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+
-| C00013    | Holmes      | London      | London       | UK           |     2 |     6000.00 |     5000.00 |     7000.00 |       4000.00 | BBBBBBB      | A003       |
-| C00001    | Micheal     | New York    | New York     | USA          |     2 |     3000.00 |     5000.00 |     2000.00 |       6000.00 | CCCCCCC      | A008       |
-| C00020    | Albert      | New York    | New York     | USA          |     3 |     5000.00 |     7000.00 |     6000.00 |       6000.00 | BBBBSBB      | A008       |
+name        type
+----------  ----------
+id          INTEGER
+name        TEXT
+city        TEXT
+email       TEXT
+phone       INTEGER
 For example:
 
-Test	Result
-select distinct(grade)from customer;
-GRADE
-----------
-2
-3
-1
-0
-GRADE
-----------
-2
-3
+Result
+avg_email_length
+----------------
+15.0
+
 ```
 
-```sql
-DELETE FROM Customer WHERE GRADE < 2;
+```
+SELECT AVG(LENGTH(email)) AS avg_email_length
+FROM customer;
 ```
 
 **Output:**
 
-<img width="567" height="392" alt="image" src="https://github.com/user-attachments/assets/ac3457c0-1c9b-4ff8-83c5-238c47d47fba" />
-
+<img width="1237" height="432" alt="image" src="https://github.com/user-attachments/assets/30a316ea-3ae5-49b1-aa79-63b508f321ad" />
 
 **Question 7**
 ---
-Write a SQL query to Delete customers from 'customer' table where 'GRADE' is greater than or equal to 2.
+Write a SQL query to return the total number of rows in the 'customer' table where the city is Noida.
+
+Sample table: customer
+
+
 
  
-Sample table: Customer
 
-+-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+  
-|CUST_CODE  | CUST_NAME   | CUST_CITY   | WORKING_AREA | CUST_COUNTRY | GRADE | OPENING_AMT | RECEIVE_AMT | PAYMENT_AMT |OUTSTANDING_AMT| PHONE_NO     | AGENT_CODE |
-+-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+
-| C00013    | Holmes      | London      | London       | UK           |     2 |     6000.00 |     5000.00 |     7000.00 |       4000.00 | BBBBBBB      | A003       |
-| C00001    | Micheal     | New York    | New York     | USA          |     2 |     3000.00 |     5000.00 |     2000.00 |       6000.00 | CCCCCCC      | A008       |
-| C00020    | Albert      | New York    | New York     | USA          |     3 |     5000.00 |     7000.00 |     6000.00 |       6000.00 | BBBBSBB      | A008       |
 For example:
 
-Test	Result
-select distinct(grade)from customer;
-GRADE
-----------
-2
-3
-1
-0
-GRADE
+Result
+COUNT
 ----------
 1
-0
 
 
-```sql
-DELETE FROM Customer WHERE GRADE >= 2;
+```
+SELECT COUNT(*) AS COUNT
+FROM customer
+WHERE city = 'Noida';
 ```
 
 **Output:**
 
-<img width="644" height="427" alt="image" src="https://github.com/user-attachments/assets/881e82dc-fe27-4492-9646-aa0dea915d0f" />
+<img width="1238" height="428" alt="image" src="https://github.com/user-attachments/assets/ba1045b4-3d51-467f-ae23-e788d452836d" />
+
 
 
 **Question 8**
 ```
+Which cities (addresses) in the "customer1" table have an average salary lesser than Rs. 15000
 
-Write a SQL query to Delete All Doctors with a NULL Last Name
+Sample table: customer1
 
-Sample table: Doctors
 
-attributes : doctor_id, first_name, last_name, specialization
+
 For example:
 
-Test	Result
-SELECT * FROM doctors;
-doctor_id   first_name  last_name   specialization
-----------  ----------  ----------  --------------
-1           John        Smith       Cardiology
-2           Emily       Johnson     Orthopedics
-3           Michael     Brown       Pediatrics
-4           Febin                   Cardiology
-doctor_id   first_name  last_name   specialization
-----------  ----------  ----------  --------------
-1           John        Smith       Cardiology
-2           Emily       Johnson     Orthopedics
-3           Michael     Brown       Pediatrics
+Result
+address     AVG(salary)
+----------  -----------
+Ahmedabad   2000.0
+Bhopal      8500.0
+Delhi       1500.0
+Hyderabad   4500.0
+Indore      10000.0
+Kota        2000.0
+Mumbai      6500.0
+
 ```
 
-```sql
-DELETE FROM Doctors
-WHERE last_name IS NULL;
+```
+SELECT address, AVG(salary)
+FROM customer1
+GROUP BY address
+HAVING AVG(salary) < 15000;
 ```
 
 **Output:**
 
-<img width="916" height="534" alt="image" src="https://github.com/user-attachments/assets/118597a7-71c0-4bd7-b49a-722184b1dc4c" />
+<img width="1235" height="723" alt="image" src="https://github.com/user-attachments/assets/e4beea77-bb2c-4772-bcaf-3686b3109341" />
+
 
 
 **Question 9**
 ```
-Write a SQL query to Delete a Specific Surgery whose ID is 3 or surgeon ID is 4.
+Write the SQL query that accomplishes the grouping of data by joining date (jdate), calculates the total work hours for each date, and excludes dates where the total work hour sum is not greater than 40.
 
-Sample table: Surgeries
+Sample table: employee1
+
 
 
 For example:
 
-Test	Result
---After Deletion
-SELECT * FROM surgeries;
-surgery_id  patient_id  surgeon_id  surgery_date
-----------  ----------  ----------  ------------
-1           1           1           2024-01-15
-2           2           2           2024-02-28
-3           3           3           2024-03-25
-surgery_id  patient_id  surgeon_id  surgery_date
-----------  ----------  ----------  ------------
-1           1           1           2024-01-15
-2           2           2           2024-02-28
+Result
+jdate       SUM(workhour)
+----------  -------------
+2004.0      46
+2006.0      46
 
 ```
 
-```sql
-DELETE FROM Surgeries
-WHERE surgery_id = 3
-   OR surgeon_id = 4;
+```
+select jdate,SUM(workhour)
+from employee1
+group by jdate
+having SUM(workhour)>40;
 ```
 
 **Output:**
 
-<img width="860" height="669" alt="image" src="https://github.com/user-attachments/assets/32494333-1357-45f6-a240-9ff35f7d95ac" />
+
+<img width="1233" height="503" alt="image" src="https://github.com/user-attachments/assets/9bba855c-bd10-4455-a00a-2d7e319b546c" />
 
 
 **Question 10**
 ```
+Write the SQL query to find how many patients have more than 3 medical records?.
 
-```Write a SQL query to Delete customers from 'customer' table where 'WORKING_AREA' is 'New York'.
+Sample table: MedicalRecords
 
-Sample table: Customer
-
-+-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+  
-|CUST_CODE  | CUST_NAME   | CUST_CITY   | WORKING_AREA | CUST_COUNTRY | GRADE | OPENING_AMT | RECEIVE_AMT | PAYMENT_AMT |OUTSTANDING_AMT| PHONE_NO     | AGENT_CODE |
-+-----------+-------------+-------------+--------------+--------------+-------+-------------+-------------+-------------+---------------+--------------+------------+
-| C00013    | Holmes      | London      | London       | UK           |     2 |     6000.00 |     5000.00 |     7000.00 |       4000.00 | BBBBBBB      | A003       |
-| C00001    | Micheal     | New York    | New York     | USA          |     2 |     3000.00 |     5000.00 |     2000.00 |       6000.00 | CCCCCCC      | A008       |
-| C00020    | Albert      | New York    | New York     | USA          |     3 |     5000.00 |     7000.00 |     6000.00 |       6000.00 | BBBBSBB      | A008       |
+name        type
+----------  ----------
+RecordID    INTEGER
+PatientID   INTEGER
+DoctorID    INTEGER
+Date        DATE
+Diagnosis   TEXT
+Treatment   TEXT
+Medication  TEXT
 For example:
 
-Test	Result
-select changes();
-CUST_CODE   CUST_NAME   CUST_CITY   WORKING_AREA  CUST_COUNTRY  GRADE       OPENING_AMT  RECEIVE_AMT  PAYMENT_AMT  OUTSTANDING_AMT  PHONE_NO    AGENT_CODE
-----------  ----------  ----------  ------------  ------------  ----------  -----------  -----------  -----------  ---------------  ----------  ----------
-C00001      Micheal     New York    New York      USA           2           3000         5000         2000         6000             CCCCCCC     A008
-C00020      Albert      New York    New York      USA           3           5000         7000         6000         6000             BBBBSBB     A008
-C00002      Bolt        New York    New York      USA           3           5000         7000         9000         3000             DDNRDRH     A008
-changes()
-----------
-3
+Result
+PatientID   TotalRecords
+----------  ------------
+1           4
 
-```sql
-delete from customer 
-WHERE WORKING_AREA = 'New York';
+
+```
+
+```
+SELECT PatientID, COUNT(RecordID) AS TotalRecords
+FROM MedicalRecords
+GROUP BY PatientID
+HAVING COUNT(RecordID) > 3;
 ```
 
 **Output:**
 
-<img width="1332" height="593" alt="image" src="https://github.com/user-attachments/assets/ad1dae46-6c85-4493-8871-4e20f4c96902" />
+
+<img width="1242" height="451" alt="image" src="https://github.com/user-attachments/assets/0f9c99fd-5ff0-4035-a3ea-c23c3b0ec45f" />
 
 
 ## RESULT
