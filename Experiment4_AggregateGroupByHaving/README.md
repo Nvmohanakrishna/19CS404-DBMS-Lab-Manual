@@ -40,6 +40,81 @@ HAVING condition;
 
 **Question 1**
 ```
+How many patients have expired insurance coverage for each insurance company?
+
+Sample table:Insurance Table
+
+
+
+For example:
+
+Result
+InsuranceCompany  TotalExpiredPatients
+----------------  --------------------
+ABC Insurance     1
+DEF Insurance     1
+GHI Insurance     1
+JKL Insurance     1
+MNO Insurance     1
+PQR Insurance     1
+STU Insurance     1
+VWX Insurance     1
+XYZ Insurance     1
+YZA Insurance     1
+
+
+```
+
+```
+SELECT InsuranceCompany,COUNT(PatientID) AS TotalExpiredPatients
+FROM Insurance
+GROUP BY InsuranceCompany;
+```
+
+**Output:**
+
+<img width="1227" height="842" alt="image" src="https://github.com/user-attachments/assets/3ec42b2f-f0d5-4c1b-918e-505ced79f0f3" />
+
+
+
+**Question 2**
+```
+What is the most common diagnosis among patients?
+
+Sample table:MedicalRecords Table
+
+
+
+For example:
+
+Result
+Diagnosis              DiagnosisCount
+---------------------  --------------
+Childhood vaccination  3
+
+
+```
+
+```
+SELECT
+    Diagnosis,
+    COUNT(*) AS DiagnosisCount
+FROM 
+    MedicalRecords
+GROUP BY 
+    Diagnosis
+ORDER BY
+    DiagnosisCount DESC
+LIMIT 1;
+```
+
+**Output:**
+
+<img width="1230" height="397" alt="image" src="https://github.com/user-attachments/assets/08979e18-4b40-4d12-a9c7-b6a303817f72" />
+
+
+**Question 3**
+```
 How many prescriptions were written in each frequency category (e.g., once daily, twice daily)?
 
 Sample tablePrescriptions Table
@@ -59,182 +134,21 @@ Once daily at  1
 Pending        1
 Twice daily    1
 
+
 ```
 
-```sql
+```
 select frequency, count(prescriptionid) as TotalPrescriptions from prescriptions group by frequency;
 ```
 
 **Output:**
 
-<img width="917" height="608" alt="image" src="https://github.com/user-attachments/assets/bc038cc6-0dd0-4f99-b877-357af563e98d" />
-
-
-**Question 2**
-```
-How many medical records are there for each patient?
-
-Sample table:MedicalRecords Table
-
-
-
-For example:
-
-Result
-PatientID   TotalRecords
-----------  ------------
-4           4
-5           1
-6           1
-7           1
-8           1
-10          2
-
-```
-
-```sql
-select PatientID,count(RecordID) as TotalRecords from MedicalRecords
-group by PatientID
-```
-
-**Output:**
-
-<img width="736" height="720" alt="image" src="https://github.com/user-attachments/assets/cf384786-2d6a-4a5b-9811-af039441fc1b" />
-
-
-**Question 3**
-```
-What is the count of male and female patients?
-
-Sample table: Patients Table
-
-
-
-For example:
-
-Result
-Gender      TotalPatients
-----------  -------------
-Female      5
-Male        5
-
-```
-
-```sql
-SELECT Gender, count(*) as
-TotalPatients
-from Patients
-group by Gender;
-```
-
-**Output:**
-
-<img width="722" height="437" alt="image" src="https://github.com/user-attachments/assets/c5f3ffa9-c02c-4611-9fb4-af6fa8b66ad3" />
+<img width="1236" height="613" alt="image" src="https://github.com/user-attachments/assets/44a193ae-06e9-43c9-984e-4bdca9803b21" />
 
 
 **Question 4**
 ```
-Write a SQL query to find  how many employees work in California?
-
-Table: employee
-
-name        type
-----------  ----------
-id          INTEGER
-name        TEXT
-age         INTEGER
-city        TEXT
-income      INTEGER
- 
-
-For example:
-
-Result
-employees_in_california
------------------------
-2
-
-```
-
-```sql
-SELECT COUNT(*) AS employees_in_california
-FROM employee
-WHERE city = 'California';
-```
-
-**Output:**
-
-<img width="678" height="381" alt="image" src="https://github.com/user-attachments/assets/7be0e0ee-8c48-4c36-8303-80d88871eaf3" />
-
-
-**Question 5**
-```
-Write a SQL query to find the customer with longest name?
-
-Table: customer
-
-name        type
-----------  ----------
-id          INTEGER
-name        TEXT
-city        TEXT
-email       TEXT
-phone       INTEGER
-For example:
-
-Result
-name          length
-------------  ----------
-Preeti Patel  12
-
-```
-```sql
-SELECT name, LENGTH(name) AS length
-FROM customer
-ORDER BY length DESC
-LIMIT 1;
-```
-
-**Output:**
-
-<img width="708" height="390" alt="image" src="https://github.com/user-attachments/assets/9b08a886-70f0-4297-acc4-8f650d4e11d1" />
-
-
-**Question 6**
-```
-Write a SQL query to find the total number of unique cities in the customer table?
-
-Table: customer
-
-name        type
-----------  ----------
-id          INTEGER
-name        TEXT
-city        TEXT
-email       TEXT
-phone       INTEGER
-For example:
-
-Result
-unique_cities
--------------
-10
-
-```
-
-```sql
-SELECT COUNT(DISTINCT city) AS unique_cities
-FROM customer;
-```
-
-**Output:**
-
-<img width="550" height="380" alt="image" src="https://github.com/user-attachments/assets/bc06fdd5-707e-4e20-9e7e-bf4b9dd9047c" />
-
-
-**Question 7**
-```
-Write a SQL query to find the maximum purchase amount.
+Write a SQL query to find the minimum purchase amount.
 
 Sample table: orders
 
@@ -253,87 +167,125 @@ ord_no      purch_amt   ord_date    customer_id  salesman_id
 For example:
 
 Result
-MAXIMUM
+MINIMUM
 ----------
-5760.0
+65.26
+
 
 ```
 
-```sql
-SELECT MAX(purch_amt) as MAXIMUM
-FROM orders;
+```
+select min(purch_amt) as MINIMUM
+from orders;
 ```
 
 **Output:**
 
-<img width="487" height="387" alt="image" src="https://github.com/user-attachments/assets/7217715b-3d8a-4506-b66e-969785baf6d2" />
+<img width="1222" height="398" alt="image" src="https://github.com/user-attachments/assets/a7941e57-3900-4e4c-97f9-7d7627eae104" />
+
+
+
+**Question 5**
+```
+Write a SQL query to find Who has the highest income among employee living in California?
+
+Table: employee
+
+name        type
+----------  ----------
+id          INTEGER
+name        TEXT
+age         INTEGER
+city        TEXT
+income      INTEGER
+For example:
+
+Result
+name        max(income)
+----------  -----------
+Adam        5000000
+
+
+```
+```
+SELECT name, max(income)
+FROM employee
+WHERE city = 'California';
+```
+
+**Output:**
+<img width="1237" height="402" alt="image" src="https://github.com/user-attachments/assets/c64b8958-52fa-4d41-b06e-da96f797d5ba" />
+
+
+
+**Question 6**
+```
+Write a SQL query to find the average length of email addresses (in characters):
+
+Table: customer
+
+name        type
+----------  ----------
+id          INTEGER
+name        TEXT
+city        TEXT
+email       TEXT
+phone       INTEGER
+For example:
+
+Result
+avg_email_length
+----------------
+15.0
+
+
+```
+
+```
+SELECT AVG(LENGTH(email)) AS avg_email_length
+FROM customer;
+```
+
+**Output:**
+
+<img width="1235" height="396" alt="image" src="https://github.com/user-attachments/assets/77c8fe7c-1a7d-4702-abef-25e3eec5f41c" />
+
+
+
+**Question 7**
+```
+Write a SQL query to return the total number of rows in the 'customer' table where the city is Noida.
+
+Sample table: customer
+
+
+
+ 
+
+For example:
+
+Result
+COUNT
+----------
+1
+
+```
+
+```
+SELECT COUNT(*) AS COUNT
+FROM customer
+WHERE city = 'Noida';
+```
+
+**Output:**
+
+<img width="1232" height="400" alt="image" src="https://github.com/user-attachments/assets/a110e3c0-8b51-4263-91a6-1a81f7813586" />
+
 
 
 **Question 8**
 ```
-Write the SQL query that accomplishes the selection of total number of products for each category from the "products" table, and includes only those products where the minimum category ID is less than 3.
-
-Sample table: products
-
-
-
-For example:
-
-Result
-category_id  count(product_name)
------------  -------------------
-1            4
-2            3
-
-```
-
-```sql
-SELECT category_id, count(product_name)
-FROM products
-GROUP BY category_id
-HAVING MIN(category_id) < 3;
-```
-
-**Output:**
-
-<img width="886" height="442" alt="image" src="https://github.com/user-attachments/assets/185b15ae-cca0-4458-a6dc-cebef7e8c088" />
-
-
-**Question 9**
-```
-Write an SQL query that groups the customer data into 5-year age intervals, calculates the minimum salary for each group, and excludes groups where the minimum salary is not less than 2000.
-
-Table: customer1
-
-
-
-For example:
-
-Result
-age_group   MIN(salary)
-----------  -----------
-25          1500
-
-```
-
-```sql
-SELECT
-    (age / 5) * 5 AS age_group,
-    MIN(salary)
-FROM customer1
-GROUP BY age_group
-HAVING MIN(salary) < 2000
-ORDER BY age_group;
-```
-
-**Output:**
-
-<img width="663" height="405" alt="image" src="https://github.com/user-attachments/assets/d097d976-3b9d-4860-892c-cdf51a08d2cb" />
-
-
-**Question 10**
-```
-Write the SQL query that accomplishes the grouping of data by addresses, calculates the sum of salaries for each address, and excludes addresses where the total salary sum is not greater than 2000.
+Which cities (addresses) in the "customer1" table have an average salary lesser than Rs. 15000
 
 Sample table: customer1
 
@@ -342,22 +294,97 @@ Sample table: customer1
 For example:
 
 Result
-address     SUM(salary)
+address     AVG(salary)
 ----------  -----------
-Bhopal      8500
-Hyderabad   4500
-Indore      10000
-Mumbai      6500
+Ahmedabad   2000.0
+Bhopal      8500.0
+Delhi       1500.0
+Hyderabad   4500.0
+Indore      10000.0
+Kota        2000.0
+Mumbai      6500.0
 
 ```
 
-```sql
-select address,SUM(salary) from customer1 group by address having SUM(salary)>2000;
+```
+SELECT address, AVG(salary)
+FROM customer1
+GROUP BY address
+HAVING AVG(salary) < 15000;
 ```
 
 **Output:**
 
-<img width="740" height="561" alt="image" src="https://github.com/user-attachments/assets/717e57fc-a27c-4783-8589-824aa61660ba" />
+<img width="1237" height="690" alt="image" src="https://github.com/user-attachments/assets/1f442d26-0b6e-407b-a0c4-87c2f4f990fb" />
+
+
+
+**Question 9**
+```
+Write the SQL query that accomplishes the grouping of data by joining date (jdate), calculates the total work hours for each date, and excludes dates where the total work hour sum is not greater than 40.
+
+Sample table: employee1
+
+
+
+For example:
+
+Result
+jdate       SUM(workhour)
+----------  -------------
+2004.0      46
+2006.0      46
+
+
+```
+
+```
+select jdate,SUM(workhour)
+from employee1
+group by jdate
+having SUM(workhour)>40;
+```
+
+**Output:**
+
+<img width="1235" height="462" alt="image" src="https://github.com/user-attachments/assets/0be3762e-5975-4b80-bb88-eedfa457e2fc" />
+
+
+
+**Question 10**
+```
+Write the SQL query to find how many patients have more than 3 medical records?.
+
+Sample table: MedicalRecords
+
+name        type
+----------  ----------
+RecordID    INTEGER
+PatientID   INTEGER
+DoctorID    INTEGER
+Date        DATE
+Diagnosis   TEXT
+Treatment   TEXT
+Medication  TEXT
+For example:
+
+Result
+PatientID   TotalRecords
+----------  ------------
+1           4
+
+```
+
+```
+SELECT PatientID, COUNT(RecordID) AS TotalRecords
+FROM MedicalRecords
+GROUP BY PatientID
+HAVING COUNT(RecordID) > 3;
+```
+
+**Output:**
+
+<img width="1227" height="422" alt="image" src="https://github.com/user-attachments/assets/4032aee6-9166-4133-b929-4be3dc80d41f" />
 
 
 
